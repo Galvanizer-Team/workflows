@@ -27,7 +27,7 @@ jobs:
           echo "Fetched Repositories: $REPOS"
           echo "REPOS=$REPOS" >> $GITHUB_ENV
         env:
-          TOKEN: ${{ secrets.GH_TOKEN }}
+          TOKEN: ${{ secrets.GH_PAT }}
           TOPIC: wf1
           ORG: Galvanizer-Team
 
@@ -49,8 +49,9 @@ jobs:
             cd "$repo"
             git add .github/workflows
             git commit -m "Update workflows | #none"
-            git push
+            git remote set-url origin "https://x-access-token:$TOKEN@github.com/$repo.git"
+            git push origin main
             cd ..
           done
         env:
-          TOKEN: ${{ secrets.GH_TOKEN }}
+          TOKEN: ${{ secrets.GH_PAT }}
