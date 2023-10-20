@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+  issues: write
+
 jobs:
   update-workflows:
     runs-on: ubuntu-latest
@@ -46,6 +50,7 @@ jobs:
             cd "$repo"
             git add .github/workflows
             git commit -m "Update workflows | #none"
+            git remote set-url origin "https://x-access-token:$TOKEN@github.com/$repo.git"
             git push origin main
             cd ..
           done
