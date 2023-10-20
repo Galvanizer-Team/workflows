@@ -2,8 +2,8 @@ name: Distribute Workflows
 
 on:
   push:
-    paths:
-      - "wf1/**" # Only run workflow when changes are made to the wf1 directory
+    branches:
+      - main
 
 jobs:
   update-workflows:
