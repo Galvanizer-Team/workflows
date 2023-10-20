@@ -7,7 +7,6 @@ on:
 
 permissions:
   contents: write
-  issues: write
 
 jobs:
   update-workflows:
@@ -50,8 +49,7 @@ jobs:
             cd "$repo"
             git add .github/workflows
             git commit -m "Update workflows | #none"
-            git remote set-url origin "https://x-access-token:$TOKEN@github.com/$repo.git"
-            git push origin main
+            git push
             cd ..
           done
         env:
