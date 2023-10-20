@@ -20,6 +20,8 @@ jobs:
             -H "Accept: application/vnd.github.mercy-preview+json" \
             https://api.github.com/search/repositories?q=topic:$TOPIC+org:$ORG \
             | jq -r '.items[].full_name' | tr '\n' ' ') # Convert newline to space
+
+          echo "Fetched Repositories: $REPOS"
           echo "REPOS=$REPOS" >> $GITHUB_ENV
         env:
           TOKEN: ${{ secrets.GH_PAT }}
@@ -36,15 +38,15 @@ jobs:
           IFS=' ' read -ra REPO_ARRAY <<< "$REPOS"
 
           for repo in "${REPO_ARRAY[@]}"; do  
-            git clone "https://$TOKEN:x-oauth-basic@github.com/$repo.git"
-            
-            # Create the .github/workflows directory if it doesn't exist
+            # git clone "https://$TOKEN:x-oauth-basic@github.com/$repo.git"
+            git clone "https://x-access-token:$TOKEN@github.com/$repo.git"
+
             mkdir -p "$repo/.github/workflows"
             cp -R wf1/* "$repo/.github/workflows/"
             cd "$repo"
             git add .github/workflows
-            git commit -m "Update workflows"
-            git push
+            git commit -m "Update workflows | #none"
+            git push origin main
             cd ..
           done
         env:
