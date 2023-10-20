@@ -55,4 +55,4 @@ jobs:
             cd ..
           done
         env:
-          TOKEN: ${{ secrets.GH_TOKEN }}
+          TOKEN: ${{ secrets.GH_PAT }}
